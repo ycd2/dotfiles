@@ -1,0 +1,106 @@
+# NOTEBOOK SETTINGS
+[notebook]
+dir = "~/Notes"
+
+# NOTE SETTINGS
+[note]
+language = "en"
+default-title = "Untitled"
+filename = "{{id}}-{{slug title}}"
+extension = "md"
+template = "default.md"
+#ignore = [
+#    "drafts/*",
+#	"log.md"
+#]
+
+# The charset used for random IDs. You can use:
+#   * letters: only letters from a to z.
+#   * numbers: 0 to 9
+#   * alphanum: letters + numbers
+#   * hex: hexadecimal, from a to f and 0 to 9
+#   * custom string: will use any character from the provided value
+id-charset = "alphanum"
+id-length = 4
+id-case = "lower"
+
+# EXTRA VARIABLES
+#
+# A dictionary of variables you can use for any custom values when generating
+# new notes. They are accessible in templates with {{extra.<key>}}
+[extra]
+author = "Vytautas"
+
+# GROUP OVERRIDES
+[group.journal]
+paths = ["journal/weekly", "journal/daily"]
+
+[group.journal.note]
+filename = "{{format-date now}}"
+
+# MARKDOWN SETTINGS
+[format.markdown]
+hashtags = true
+colon-tags = false
+multiword-tags = false
+
+# EXTERNAL TOOLS
+[tool]
+# Default editor used to open notes. When not set, the EDITOR or VISUAL
+# environment variables are used.
+editor = "helix"
+shell = "/bin/bash"
+pager = "less -FIRX"
+fzf-preview = "bat -p --color always {-1}"
+
+# LSP
+#
+#   Configure basic editor integration for LSP-compatible editors.
+#   See https://github.com/mickael-menu/zk/blob/main/docs/editors-integration.md
+#
+[lsp]
+[lsp.diagnostics]
+# Each diagnostic can have for value: none, hint, info, warning, error
+
+# Report titles of wiki-links as hints.
+#wiki-title = "hint"
+# Warn for dead links between notes.
+dead-link = "error"
+
+[lsp.completion]
+# Customize the completion pop-up of your LSP client.
+
+# Show the note title in the completion pop-up, or fallback on its path if empty.
+#note-label = ""
+# Filter out the completion pop-up using the note title or its path.
+#note-filter-text = " "
+# Show the note filename without extension as detail.
+#note-detail = ""
+
+
+# NAMED FILTERS
+[filter]
+recents = "--sort created- --created-after 'last two weeks'"
+# Matches the notes created the last two weeks. For example:
+#    $ zk list recents --limit 15
+#    $ zk edit recents --interactive
+#recents = "--sort created- --created-after 'last two weeks'"
+
+# COMMAND ALIASES
+#
+#   Aliases are user commands called with `zk <alias> [<flags>] [<args>]`.
+#
+#   The alias will be executed with `$SHELL -c`, please refer to your shell's
+#   man page to see the available syntax. In most shells:
+#     * $@ can be used to expand all the provided flags and arguments
+#     * you can pipe commands together with the usual | character
+#
+[alias]
+# Edit the last modified note.
+edlast = "zk edit --limit 1 --sort modified- $@"
+
+# Edit the notes selected interactively among the notes created the last two weeks.
+recent = "zk edit --sort created- --created-after 'last two weeks' --interactive"
+
+# Show a random note.
+lucky = "zk list --quiet --format full --sort random --limit 1"
